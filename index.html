@@ -5,12 +5,17 @@
 <script src="products.js"></script>
 <style>
     .product {
-        border: 1px grey solid;
+        border: 2px grey solid;
         padding: 20px;
         margin: 40px;
         text-align: center;
     }
 </style>
+<script>
+    if('serviceWorker' in navigator) {
+navigator.serviceWorker.register('service-worker.js');
+};
+</script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link rel="manifest" href="petstore.webmanifest">
 </head>

@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>Vue.js Pet Depot</title>
+<script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+<div id="app">
+<header>
+<h1 v-text="sitename"></h1>
+<button v-on:click='showCheckout'>
+    <!-- 'cartItemCount' is used the same way as a data property. -->
+    {{ cartItemCount }}
+    <!-- add the cart icon -->
+    <span class="fa-solid fa-cart-plus"></span> Checkout
+    </button>
+</header>
+<main>
+    <div v-if='showProduct'>
+        <!-- the code for the product page -->   
+        
+          
+    <figure>
+    <!-- bind 'src' attr to 'product.image' in 'data' -->
+    <img v-bind:src="product.image">
+    </figure>
+    <h2 v-text="product.title"></h2>
+    <p v-text="product.description"></p>
+    <!-- The double curly brackets is used instead of 'v-text' -->
+    <p>Price: {{product.price}}</p>
+    <p>Available Inventory: {{product.availableInventory}}</p>
+    <button v-on:click="addToCart" v-if="canAddToCart">
+        Add to cart
+        <!-- This button will be displayed when 'canAddToCart' is True -->
+        </button>
+        <!-- This button will be displayed otherwise -->
+    <button disabled='disabled' v-else>
+        Add to cart
+        </button>
+    </div>
+    <div v-else>
+        <!-- the code for the checkout page -->
+         <h2>checkout
+         </h2>
+         <h2>Checkout</h2>
+<p>
+<strong>First Name:</strong>
+<!-- This input field is bound to 'firstName' in the 'order' object -->
+<input v-model="order.firstName"/>
+</p>
+<p>
+<strong>Last Name:</strong>
+<!-- This input field is bound to 'lastName' in the 'order' object -->
+<input v-model="order.lastName"/>
+</p>
+<h2>Order Information</h2>
+<p>First Name: {{order.firstName}}</p>
+<p>Last Name: {{order.lastName}}</p>
+    </div>       
+    </main>
+</div>
+<script type="text/javascript">
+var webstore = new Vue({ 
+el: '#app', // <=== Don't forget this comma
+data: {  // the 'data' option
+// the key 'sitename' matches the value of 'v-text' earlier
+sitename: "example",
+showProduct:true,
+product: {
+id: 1001,
+title: "Cat Food, 25lb bag",
+description: "Selling exotic Dog meat and cat meat as well ranging from a variety of diffrent breeds",
+price: 2000,
+image: "download",
+availableInventory: 5
+},
+cart: [] // array to store items in shopping cart
+},
+methods: {
+addToCart: function () {
+this.cart.push(this.product.id);
+},
+showCheckout(){
+    this.showProduct = this.showProduct ? false : true;
+},
+},
+computed: { // the Computed Property object
+cartItemCount: function() { // the property name
+// its value is calculated when it is called
+return this.cart.length || "";
+},
+canAddToCart: function() {
+return this.product.availableInventory > this.cartItemCount;
+}
+
+}
+
+
+});
+
+</script>
+</body>
+</html>
